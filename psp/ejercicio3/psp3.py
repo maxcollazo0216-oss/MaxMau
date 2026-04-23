@@ -4,8 +4,6 @@ class SimpsonInverso:
     def __init__(self, xi, dof):
         self.xi = xi
         self.dof = dof
-
-        self.x = 0
         self.num_seg = 10
         self.E = 0.00001
 
@@ -14,10 +12,10 @@ class SimpsonInverso:
         den = math.sqrt(self.dof * math.pi) * math.gamma(self.dof / 2)
         return (num / den) * (1 + (x**2 / self.dof)) ** (-(self.dof + 1) / 2)
 
-    def integrar(self):
-        w = (self.x - self.xi) / self.num_seg
+    def integrar(self, x):
+        w = (x - self.xi) / self.num_seg
 
-        suma = self.f(self.xi) + self.f(self.x)
+        suma = self.f(self.xi) + self.f(x)
 
         for i in range(1, self.num_seg, 2):
             suma += 4 * self.f(self.xi + i * w)
@@ -27,11 +25,11 @@ class SimpsonInverso:
 
         return (w / 3) * suma
 
-    def calcular_p(self):
+    def calcular_p(self, x):
         p_old = 0
 
-        while True:
-            p = self.integrar()
+        for _ in range(20):  # límite para no congelar
+            p = self.integrar(x)
             error = abs(p - p_old)
 
             if error < self.E:
@@ -40,27 +38,25 @@ class SimpsonInverso:
             p_old = p
             self.num_seg *= 2
 
-    def encontrar_x(self, p_objetivo):
+        return p
+
+    def encontrar_x(self, p):
         x = 0.5
         d = 0.5
+        tol = 0.00001
 
-        error_anterior = 1
+        for _ in range(50):  # límite
+            p_calc = self.calcular_p(x)
+            error = abs(p - p_calc)
 
-        while True:
-            self.x = x
-            p_calc = self.calcular_p()
-
-            error = p_objetivo - p_calc
-
-            if abs(error) < self.E:
+            if error < tol:
                 return x
 
-            if error * error_anterior < 0:
-                d = d / 2
-
-            if p_calc < p_objetivo:
-                x = x + d
+            if p_calc < p:
+                x += d
             else:
-                x = x - d
+                x -= d
 
-            error_anterior = error
+            d = d / 2
+
+        raise Exception("No converge")
