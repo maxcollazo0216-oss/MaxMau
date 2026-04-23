@@ -7,8 +7,7 @@ class VentanaPSP3(QDialog):
     def __init__(self):
         super().__init__()
         uic.loadUi("gui/ventana_psp_3.ui", self)
-
-        # IMPORTANTE: este es el nombre real del botón en Qt
+        
         self.pushButton.clicked.connect(self.pushButton_click)
 
     def pushButton_click(self):

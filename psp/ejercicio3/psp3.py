@@ -36,14 +36,14 @@ class SimpsonInverso:
                 return p
 
             p_old = p
-            self.num_seg *= 2
+            self.num_seg = 2
 
         return p
 
     def encontrar_x(self, p):
         x = 0.5
         d = 0.5
-        tol = 0.00001
+        tol = 0.000001
 
         for _ in range(50):  # límite
             p_calc = self.calcular_p(x)
