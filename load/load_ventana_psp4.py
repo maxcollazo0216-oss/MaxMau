@@ -38,13 +38,18 @@ class VentanaPSP4(QDialog):
             p = float(self.lineEdit_2.text())
 
             modelo = PSP4(self.x, self.y)
-            sigma, T, Range, UPI, LPI, YK = modelo.calcular(xk, p)
+            sigma, T, Range, UPI, LPI, YK, B0, B1 , R, R2 = modelo.calcular(xk, p)
 
             self.label_YK.setText(str(round(YK, 4)))
             self.label_T.setText(str(round(T, 4)))
             self.label_Range.setText(str(round(Range, 4)))
             self.label_UPI.setText(str(round(UPI, 4)))
             self.label_LPI.setText(str(round(LPI, 4)))
+            self.label_B0.setText(str(round(B0, 4)))
+            self.label_B1.setText(str(round(B1, 4)))
+            self.label_R.setText(str(round(R, 4)))
+            self.label_R2.setText(str(round(R2, 4)))
+           
 
             QMessageBox.information(self, "OK", "Cálculo realizado")
 

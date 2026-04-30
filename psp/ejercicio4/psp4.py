@@ -56,7 +56,7 @@ class PSP4:
         p_val = self.integrar_t(x_t, n - 2)
         tail = 1 - 2 * p_val
 
-        return sigma, t, rango, upi, lpi, yk
+        return sigma, t, rango, upi, lpi, yk, b0, b1, r, r2
 
     
     def t_student(self, p, dof):
