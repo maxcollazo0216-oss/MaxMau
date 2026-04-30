@@ -28,7 +28,7 @@ class SimpsonInverso:
     def calcular_p(self, x):
         p_old = 0
 
-        for _ in range(20):  # límite para no congelar
+        for _ in range(20):  
             p = self.integrar(x)
             error = abs(p - p_old)
 
@@ -45,7 +45,7 @@ class SimpsonInverso:
         d = 0.5
         tol = 0.000001
 
-        for _ in range(50):  # límite
+        for _ in range(50): 
             p_calc = self.calcular_p(x)
             error = abs(p - p_calc)
 
